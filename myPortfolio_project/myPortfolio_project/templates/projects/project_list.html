@@ -2,19 +2,35 @@
 
 {% block page_content %}
 <div class="container">
-    <h1>Your projects here!</h1>
+   <a style="text-decoration: none; color: blue" href="{%url 'view_all_projects'%}"> <h1>Your projects here!</h1></a>
     <br>
     <div class="row">
+    <div class="col-md-6">
+    <a href="{%url 'create_project'%}">
+        <button>Create Project</button>
+    </a></div>
+        <div class="col-md-6 ">
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="text" name = "filter">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row my-5">
         {% for project in projects %}
-        <div class="col-md-4">
+        <div class="col-md-4 my-2">
+            <a style="text-decoration: none; color: black" href="{{project.id}}">
             <div class="card">
-                <div class="row">
+                <div class="">
                     <span>{{ project.id }} | {{ project.title }}</span>
                 </div>
                 <img src="{{project.image}}" alt="Project Image">
                 <br>
-                <small>{{ project.description }}</small>
+                <small>{{ project.description | slice:":100"}} ...</small>
             </div>
+            </a>
         </div>
         {% endfor %}
     </div>
